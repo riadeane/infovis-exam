@@ -1,0 +1,206 @@
+:root {
+    --acnh-green: #9dffb0;
+    --acnh-blue: #81f1f7;
+    --acnh-white: #fffffa;
+    --acnh-brown: #8a622b;
+    --acnh-yellow: #fff563;
+
+    --logo-url: url(https://www.animal-crossing.com/new-horizons/assets/img/global/logos/logo-acnh-en.png)
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--acnh-blue);
+    font-family: 'Poppins', sans-serif;
+    font-size: 100%;
+    color: #221B21;
+    margin: 0;
+}
+
+header {
+    background-color: var(--acnh-blue);
+    padding: 0.5em;
+    padding-left: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: "Lora", monospace;
+}
+
+code {
+    font-size: large;
+    background-color: var(--acnh-yellow);
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+body>div {
+    margin: 4em;
+    padding: 2em;
+    border: var(--acnh-white) 5px solid;
+    border-radius: 5px;
+    background-color: var(--acnh-white);
+}
+
+img {
+    -webkit-filter: drop-shadow(rgba(0, 0, 0, 0.35) 0px 5px 15px);
+    filter: drop-shadow(rgba(0, 0, 0, 0.35) 0px 5px 15px);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 8px;
+    min-width: 15em;
+}
+
+th {
+    border-left: var(--acnh-blue) 5px solid;
+    border-bottom: var(--acnh-white) 5px solid;
+    background-color: #f2f2f2;
+    font-family: "Lora", monospace;
+}
+
+tr:hover {
+    background: #f2f2f2;
+}
+
+
+text {
+    pointer-events: none;
+}
+
+ul {
+    list-style: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+li span:first-child {
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+    font-size: 3em;
+    line-height: 0.5em;
+}
+
+li span {
+    vertical-align: middle
+}
+
+select {
+    width: 100%;
+    min-width: 15ch;
+    max-width: 40ch;
+    border: 2px solid black;
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    cursor: pointer;
+    line-height: 1.1;
+    background-color: #fff;
+}
+
+.graph {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.graph div {
+    margin: 10px;
+}
+
+.tooltip {
+    opacity: 0;
+    position: absolute;
+    padding: 0.6em 1em;
+    background: #fff;
+    text-align: center;
+    line-height: 1.4em;
+    font-size: 0.9em;
+    border: 1px solid black;
+    z-index: 10;
+    border-radius: 5px;
+    transition: all 0.1s ease-out;
+    pointer-events: none;
+}
+
+.selected {
+    stroke: red;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tarea {
+    border-left: var(--acnh-blue) 5px solid;
+    background-color: #f2f2f2;
+    padding: 0.5em;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+#title {
+    font-size: 4em;
+    text-shadow: -3px 0 var(--acnh-brown), 0 3px var(--acnh-brown), 3px 0 var(--acnh-brown), 0 -3px var(--acnh-brown), rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    color: var(--acnh-yellow);
+}
+
+#title-informe {
+    font-size: 2em;
+    margin: 0;
+}
+
+#critter-data {
+    background-color: var(--acnh-brown);
+    color: var(--acnh-white);
+    border-radius: 5px;
+    padding: 10px;
+    min-width: 15%;
+}
+
+#graph-title {
+    margin: auto;
+}

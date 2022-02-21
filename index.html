@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>ACNH Tool</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <img alt="Animal Crossing: New Horizons logo" src="https://www.animal-crossing.com/new-horizons/assets/img/global/logos/logo-acnh-en.png">
+        <h1 id="title">Critter availability tool!</h1>
+    </header>
+    <div class="column">
+        <h2 id="graph-title">Critter availability by month</h2>
+        <div class="row">
+            <div class="column">
+                <p>Critter availability depends on the month and hemisphere you're playing in!</p>
+                <div class="input-container">
+                    <label for="hemispheres">Select hemisphere</label>
+                    <select name="hemispheres" id="hemispheres">
+                        <option value="NH">Northern hemisphere</option>
+                        <option value="SH">Southern hemisphere</option>
+                    </select>
+                </div>
+                <p>The colors code the type of critter available:</p>
+                <ul>
+                    <li><span class="bullet-sea-creatures">•</span> <span>Sea Creatures</span></li>
+                    <li><span class="bullet-insects">•</span> <span>Insects</span></li>
+                    <li><span class="bullet-fish">•</span> <span>Fish</span> </li>
+                </ul>
+                <p>
+                    Hover over and see the number of critters for each month!
+                </p>
+            </div>
+            <div id='graph-container'>
+                <div id="tooltip" class="tooltip">
+                    <div class="tooltip-date">
+                        <span id="date"></span>
+                    </div>
+                    <ul>
+                        <li> <span class="bullet-sea-creatures">•</span> Sea Creatures: <span id="sea-creatures"></span></li>
+                        <li> <span class="bullet-insects">•</span> Insects: <span id="insects"></span></li>
+                        <li> <span class="bullet-fish">•</span> Fish: <span id="fish"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="column">
+                <h2 class="no-margin">Critters available each month!</h2>
+                <p class="description no-margin">
+                    The border color of each critter shows their category, using the same colors as above<br>
+                    Their radius depends on their price at Nook's Cranny<br>
+                    <span class="bold">Zoom in and click on a critter to see all its data!</span>
+                </p>
+            </div>
+            <div class="column">
+                <label for="hemispheres-2">Select hemisphere</label>
+                <select name="hemispheres-2" id="hemispheres-2">
+                    <option value="NH">Northern hemisphere</option>
+                    <option value="SH">Southern hemisphere</option>
+                </select>
+            </div>
+            <div class="column">
+                <label for="months">Select month</label>
+                <select name="months" id="months"></select>
+            </div>
+        </div>
+        <div class="graph">
+            <div id="critter-data">
+                <h2 class='critter-info' id="critter-name"></h2>
+                <p class='critter-info' id="critter-type"></p>
+                <p class='critter-info' id="critter-price"></p>
+                <p class='critter-info' id="critter-time-availability"></p>
+                <p class='critter-info' id="critter-location"></p>
+                <p class='critter-info' id="critter-weather"></p>
+                <p class='critter-info' id="critter-shadow"></p>
+                <p class='critter-info' id="critter-speed"></p>
+                <p class='critter-info' id="critter-catch_difficulty"></p>
+                <p class='critter-info' id="critter-vision"></p>
+                <p class='critter-info' id="critter-catches_to_unlock"></p>
+                <p class='critter-info' id="critter-spawn_rate"></p>
+            </div>
+            <div id='bubble-container'>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Made with ❤️ by <a href="https://github.com/riadeane">Ria Deane</a></p>
+    </footer>
+    <script src='availability.js'></script>
+    <script src='bubble.js'></script>
+</body>
+
+</html>

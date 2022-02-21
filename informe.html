@@ -1,0 +1,407 @@
+<!-- https://puc-infovis.github.io/version-2021/ejemplos/informe1.html -->
+<!-- https://puc-infovis.github.io/version-2021/ejemplos/informe2.html -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>ACNH Critter Tool</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora&family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div>
+        <div id="title-informe">
+            <h1 class="no-margin">Informe</h1>
+            <p class="no-margin">Ria Deane | IIC2026</p>
+        </div>
+        <div>
+            <h2>Primer nivel: Caracterización del dominio</h2>
+            <div>
+                <h3>Contextualización de datos</h3>
+                <p>
+                    Se utilizaron cuatro datasets con información del juego Animal Crossing: New Horizons, obtenidos
+                    desde
+                    un dataset recopilado por jugadores disponible en
+                    <a href="https://www.kaggle.com/prasertk/animal-crossing-new-horizons-with-image-url">kaggle</a>
+                    . Estos datasets son <code>fish.csv</code>, <code>insects.csv</code>, y
+                    <code>sea_creatures.csv</code>. Además, a partir de esta información se creó el dataset
+                    <code>availability.csv</code>, la forma en la que se creó está disponible en el archivo
+                    <code>parse.ipynb</code>
+                </p>
+                <p>
+                    Los datasets (excluyendo <code>availability.csv</code>) presentan las distintas criaturas que se
+                    pueden atrapar en el juego: pescados, insectos
+                    y criaturas submarinas. Estos incluyen datos como el nombre de las criaturas, su precio de venta, el
+                    tamaño, dónde se pueden atrapar, entre otros. Sin embargo, la informacion más importante que
+                    entregan estos datasets es saber en qué epoca del año se pueden atrapar.
+                </p>
+                <div>
+                    <p>
+                        ¿Por qué es importante esto? Un mecanismo de juego particular de Animal Crossing es que tu
+                        partida es en tiempo real. En el juego vives en una isla junto a varios personajes, y todas las
+                        acciones que puedes hacer se rigen según el reloj de tu consola, además del hemisferio donde
+                        vives para determinar las estaciones del año. Hay criaturas que solamente están disponibles en
+                        verano y se pueden atrapar durante todo el día, mientras que otras que solamente se pueden
+                        atrapar durante Septiembre entre las 4:00 y las 19:00, para dar unos ejemplos.
+                    </p>
+                    <p>
+                        Para saber más sobre este mecanismo de juego, dejo esta nota: <a
+                            href="https://verne.elpais.com/verne/2020/03/17/articulo/1584445470_242420.html">"Animal
+                            Crossing, un mundo virtual regido por un reloj real"</a>.
+                    </p>
+                </div>
+                <p>
+                    Por otro lado, <code>availability.csv</code> presenta los datos de disponibilidad de forma agregada.
+                    Cada fila representa la disponibilidad de un mes en un hemisferio, y cada atributo de ella
+                    representa el número de criaturas de un tipo (pez, insecto o criatura submarina) disponibles en esa
+                    fecha.
+                </p>
+            </div>
+            <div>
+                <h3>
+                    Usuario objetivo
+                </h3>
+                <p>
+                    Esta visualización está dirigida a aquellas personas que juegan Animal Crossing y quieren descubrir
+                    cuáles son las criaturas que pueden atrapar en distintos momentos del año y día. Usualmente, como
+                    jugador, ocurre
+                    que uno busca en Google las criaturas disponibles en cierto mes y hemisferio, y se dirije al Wiki
+                    de Animal Crossing para encontrar toda la información. Por ejemplo, en <a
+                        href="https://animalcrossing.fandom.com/wiki/Guide:March_fish_list_(New_Horizons)">este link</a>
+                    puedes encontrar todos los peces disponibles durante marzo. No hay un lugar centralizado con todos
+                    los datos del juego, y como jugador sería muy útil tenerlo de esa forma. Busqué crear una
+                    herramienta que cumpla con esta necesidad.
+                </p>
+                <p>
+                    Esta herramienta tiene como objetivo ser una forma amigable y fácil de encontrar esta información.
+                    Se busca darle al
+                    usuario la capacidad de filtrar y encontrar la información que más le sirva.
+                </p>
+                <p>
+                    La herramienta está en inglés ya que la gran mayoría de las personas juegan en este idioma y los
+                    datos se encontraban en inglés. Aún así, se puede traducir con Google Translate de forma completa.
+                </p>
+            </div>
+        </div>
+        <div>
+            <h2>Segundo nivel: Abstracción de datos y tareas</h2>
+            <div>
+                <!-- Explicar un poco más, pq son utiles para el usuario y pq las quiere hacer -->
+                <h3>Abstracción de tareas</h3>
+                <h4>Tarea 1</h4>
+                <p class="tarea">
+                    Descubrir tendencias de criaturas disponibles en distintos meses (según el hemisferio).
+                </p>
+                <p>
+                    Mediante esta tarea se busca que el usuario pueda descubrir la tendencia de las criaturas que estan
+                    disponibles cada mes y comprobar hipótesis que pueda tener al momento de jugar. Por ejemplo: si hay
+                    más peces o insectos disponibles en cierto mes, si es mejor jugar en verano o invierno, cuántos
+                    peces están
+                    disponibles cada mes, entre otros.
+                </p>
+                <h4>Tarea 2</h4>
+                <p class="tarea">
+                    Sondear las criaturas disponibles en un mes y hemisferio seleccionado.
+                </p>
+                <p>
+                    Se busca poder darle la capacidad al usuario de seleccionar el mes y hemisferio en el cual se
+                    encuentra para que pueda conocer las criaturas que se pueden atrapar en esa época. En el juego, no
+                    sabes cuándo está
+                    disponible una criatura hasta que lo atrapas por primera vez (y queda guardado con todos sus datos
+                    en el
+                    "critterpedia"), por lo que es muy útil para usuarios tener esta información si están buscando
+                    capturar todas las
+                    criaturas del juego.
+                </p>
+                <h4>Tarea 3</h4>
+                <p class="tarea">
+                    Identificar las características de las criaturas disponibles en el juego.
+                </p>
+                <p>
+                    Mediante esta tarea se busca entregar información al usuario sobre cada criatura disponible: su
+                    precio, ubicación, hora del día que está disponible, entre otros. Es útil para usuarios ya que
+                    encontrará toda la
+                    información relevante de la criatura en un sólo lugar, la cual no se puede encontrar de forma fácil
+                    y resumida en el juego, e incluso hay datos que uno descubre al momento de jugar pero no están de
+                    forma explícita en algún lugar (por ejemplo, el tamaño de un pez se ve cuando los intentas atrapar
+                    pero no hay una vista en el juego que te diga explícitamente el tamaño de ese pez).
+                </p>
+            </div>
+            <div>
+                <h3>Abstracción de datos</h3>
+                <h4>Datasets de criaturas</h4>
+                <p>
+                    Primero que todo, los tres datasets de criaturas son de tipo tabular. En ellas hay datos singulares
+                    de tipo ítem,
+                    los cuales serian los peces,
+                    insectos y criaturas submarinas. Por otro lado, los datos que describen estos ítems son de tipo
+                    atributo.
+                </p>
+                <h4>Atributos comunes a los 3 datasets</h4>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Abstracción</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>Identificador único de la criatura. Los que se encuentran entre el 100 y el 199 son peces,
+                            entre el 200 y 299 son insectos y el 300 y 399 son criaturas submarinas</td>
+                        <td>Categórico <br>Llave</td>
+                    </tr>
+                    <tr>
+                        <td>name</td>
+                        <td>Nombre capitalizado de la criatura</td>
+                        <td>Categórico <br>Llave</td>
+                    </tr>
+                    <tr>
+                        <td>image_url</td>
+                        <td>URL a una imagen de la criatura ubicada en una <a href="https://acnhcdn.com/">red de
+                                distribución de contenidos</a> del juego</td>
+                        <td>Categórico <br>Llave</td>
+                    </tr>
+                    <tr>
+                        <td>type</td>
+                        <td>Tipo de criatura. Puede ser "Fish", "Insect" o "Sea Creature"</td>
+                        <td>Categórico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>price</td>
+                        <td>Precio de la criatura en el juego</td>
+                        <td>Cuantitativo <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>catches_to_unlock</td>
+                        <td>Cantidad de criaturas de su tipo que se deben atrapar para que sea disponible</td>
+                        <td>Cuantitativo <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>spawn_rate</td>
+                        <td>Es la tasa a la que aparecen las criaturas. La suma de las tasas de todos los peces
+                            disponibles en un cierto mes siempre es 100, ya que funcionan como porcentajes. Puede ser un
+                            número o un intervalo. Si es un número, es porque cuando está disponible su tasa de
+                            generación siempre es ese número. Si es un intervalo significa que varía entre el menor
+                            número y el mayor.</td>
+                        <td>Cuantitativo <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td><span class="italic">{NH/SH} {month}</span></td>
+                        <td>Hay un total de 24 atributos de este tipo, los 12 meses para cada hemisferio. Los datos
+                            funcionan como intervalos de tiempo, además de dos categorías adicionales, que son "NA" para
+                            indicar que no está disponible, y "All day" para indicar que está disponible todo el día.
+                            Los intervalos no se trabajan como datos de tiempo en este minuto, en esta herramienta
+                            solamente se expone esta información como texto plano. Por lo tanto, se decidió
+                            categorizarlo como "Categórico"</td>
+                        <td>Categórico <br>Valor</td>
+                    </tr>
+                </table>
+                <h4>Atributos adicionales en <code>fish.csv</code></h4>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Abstracción</th>
+                    </tr>
+                    <tr>
+                        <td>location</td>
+                        <td>Ubicación en la isla del jugador donde se puede atrapar el pez. Puede ser "Sea", "River",
+                            "Pond", "Pier", o "River (clifftop)" </td>
+                        <td>Categórico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>shadow</td>
+                        <td>Tamaño de la sombra al momento de verlo en el mar/río. Puede ser "X-Small", "Small",
+                            "Medium", "Large", "X-Large", "X-Large w/Fin" o "XX-Large"</td>
+                        <td>Ordinal <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>catch_difficulty</td>
+                        <td>Dificultad para capturar al pez. Puede ser "Very Easy", "Easy", "Medium", "Hard", "Very
+                            Hard"</td>
+                        <td>Ordinal <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>vision</td>
+                        <td>Para capturar un pez, debe ver el señuelo de tu caña de pescar. Este atributo determina qué
+                            tan lejos puede estar el señuelo para que lo vea. Puede ser "Very Wide", "Wide", "Medium",
+                            "Narrow", "Very Narrow"</td>
+                        <td>Ordinal <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                </table>
+                <h4>Atributos adicionales en <code>insects.csv</code></h4>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Abstracción</th>
+                    </tr>
+                    <tr>
+                        <td>location</td>
+                        <td>Ubicación de la isla donde se puede encontrar el insecto. Puede ser "On trees (any kind)",
+                            "On the ground", "Flying near flowers", "On palm trees", "On hardwood/cedar trees"</td>
+                        <td>Categórico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>weather</td>
+                        <td>El clima que debe haber en la isla para que aparezca el insecto. Puede ser "Any weather",
+                            "Any except rain", o "Rain only".</td>
+                        <td>Categórico <br>Valor</td>
+                    </tr>
+                </table>
+                <h4>Atributos adicionales en <code>sea_creatures.csv</code></h4>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Abstracción</th>
+                    </tr>
+                    <tr>
+                        <td>shadow</td>
+                        <td>Tamaño de la sombra al momento de verlo en el mar. Puede ser "X-Small", "Small", "Medium",
+                            "Large" o "X-Large"</td>
+                        <td>Ordinal <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>speed</td>
+                        <td>Rapidez de la criatura submarina al intentar atraparlo (uno los atrapa mientras nada en el
+                            mar). Puede ser "Very slow", "Slow", "Medium", "Fast" o "Very Fast"</td>
+                        <td>Ordinal <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                </table>
+                <h4>Dataset de disponibilidad, <code>availability.csv</code></h4>
+                <p>Los datos singulares de tipo ítem de este dataset son los meses de cada hemisferio.</p>
+                <table>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Abstracción</th>
+                    </tr>
+                    <tr>
+                        <td>Hemisphere Month</td>
+                        <td>Un string con el hemisferio (en formato "NH" o "SH") y el mes de forma abreviada (por
+                            ejemplo, "Jan")</td>
+                        <td>Categórico <br>Llave</td>
+                    </tr>
+                    <tr>
+                        <td>Fish</td>
+                        <td>Número de peces disponibles en ese hemisferio y mes</td>
+                        <td>Cuantitativo <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>Insects</td>
+                        <td>Número de insectos disponibles en ese hemisferio y mes</td>
+                        <td>Cuantitativo <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                    <tr>
+                        <td>Sea Creatures</td>
+                        <td>Número de criaturas marinas disponibles en ese hemisferio y mes</td>
+                        <td>Cuantitativo <br>Secuencial <br>No cíclico <br>Valor</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div>
+            <h2>Tercer nivel: Codificación visual y de interacción</h2>
+            <p>
+                Procuré de hacerlo lo más accesible posible, con los criterios de contraste suficientes y usando un
+                filtro para aquellas personas con daltonismo. La paleta de colores fue encontrada en <a
+                    href="https://www.color-hex.com/color-palette/95498">este enlace.</a>
+            </p>
+            <h3>Tarea 1</h3>
+            <p class="tarea">
+                Descubrir tendencias de criaturas disponibles en distintos meses (según el hemisferio).
+            </p>
+            <p>
+                Para mostrar estas tendencias se decidió hacer un gráfico de áreas apiladas, como idiom visual, ya que
+                permite comparar de forma clara distintas categorías de un mismo dato.
+                Con esto se presentan dos ejes, el eje Y representa el número de criaturas disponibles mientras que el
+                eje X es una escala de tiempo que representa los meses de año.
+            </p>
+            <p>
+                Para poder permitir al usuario hacer la diferencia entre hemisferios, como decisión de diseño se hizo
+                una selección para
+                cada hemisferio.
+            </p>
+            <p>
+                Las áreas, como marca bidimensional, codifican el tipo de criatura. Dado que son un dato categórico se
+                decidió usar un colormap categórico como canal para representarlo, usando la paleta de colores
+                mencionada anteriormente. Para mostrar la relación entre el tipo y el color, y así facilitar el análisis
+                del usuario, se hizo una leyenda en la
+                parte izquierda de la vista.
+            </p>
+            <p>
+                Por otro lado, para dar mayor detalle de los datos presentes en cada mes, se incorporó la decisión de
+                diseño de hacer un tooltip que aparece al hacer hover sobre el gráfico. Este tooltip se asocia con el
+                mes más cercano al cursor en ese momento, y contiene información sobre el mes y el número de criaturas
+                de cada tipo en ese mes.
+            </p>
+            <h3>Tarea 2</h3>
+            <p class="tarea">
+                Sondear las criaturas disponibles en un mes y hemisferio seleccionado.
+            </p>
+            <p>
+                Para este gráfico se hizo la decisión de diseño de usar Facet para separarlos en dos vistas, ya que
+                facilita la interacción del usuario con la herramienta de visualización, y permite cumplir esta tarea y
+                la tarea 3. Al lado izquierdo tenemos la información específica de la criatura, y al derecho tenemos el
+                gráfico.
+            </p>
+            <p>
+                Para sondear las criaturas se decidió hacer un bubble chart, el cual funciona como idiom visual. Esto
+                permite sondear las criaturas disponibles de forma entretenida, ya que aparecen círculos al seleccionar
+                su "ubicación" (hemisferio y mes) por lo que se puede conocer los "elementos" (criaturas). Como decisión
+                de diseño, se decidió permitir la selección del hemisferio y mes del cual el jugador quiere saber más.
+            </p>
+            <p>
+                Los círculos se utilizan como marca para representar cada criatura. Las decisiones que se tomaron
+                respecto a esto se explican en la tarea 3.
+            </p>
+            <p>
+                Para hacer un sondeo completo de las criaturas disponibles, como idiom de interacción se permite el
+                zooming y panning de
+                la vista, ya que hay círculos que tienen un precio bajo y por ende su radio termina siendo pequeño.
+                Además, en el mes
+                donde hay más criaturas disponibles (agosto para el hemisferio sur y febrero para el norte), hay casi
+                150 círculos en
+                pantalla. Poder hacer zooming y panning permite revisar bien todas las criaturas disponibles.
+            </p>
+            <p>
+                Para conocer la criatura y sus datos específicos, las decisiones que se tomaron se detallan en la
+                siguiente tarea.
+            </p>
+            <h3>Tarea 3</h3>
+            <p class="tarea">
+                Identificar las características de las criaturas disponibles en el juego.
+            </p>
+            <p>
+                Para las criaturas, hay varios atributos que se codifican como canales en las marcas de círculo. La
+                ubicación es aleatoria, y el
+                relleno del círculo es la imagen disponible en el atributo <code>image_url</code> como canal de
+                identificación. El color del borde del círculo se utiliza como canal para representar el tipo de
+                criatura que es, usando la misma escala de colores que la tarea 1. Finalmente, se decidió utilizar el
+                precio de la criatura como canal de magnitud en el radio del círculo, ya que es uno de los aspectos más
+                importantes para jugadores al momento de buscar criaturas.
+            </p>
+            <p>
+                Como idiom de interacción se decidió permitir la selección de criaturas, al hacer hover sobre las
+                criaturas se cambia el color por uno muy distinto al colormap utilizado para el borde, y al hacer click
+                sobre ello se mantiene el nuevo color, como canal de identificación. En ese minuto, aparecen los datos
+                específicos de la criatura en el lado izquierdo de la vista.
+            </p>
+            <p>
+                Como decisión de diseño, se decidió incluir los datos específicos de la criatura seleccionada en el lado
+                izquierdo. Se priorizó presentarlos como texto, ya que a usuarios les facilita ver atributos categóricos
+                (la mayoría de los que se presentan en esta tarea) de forma directa.
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
